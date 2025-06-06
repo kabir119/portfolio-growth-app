@@ -8,12 +8,12 @@ st.title("📈 Portfolio Growth Projection")
 # --- Inputs --- #
 with st.sidebar:
     st.header("Input Parameters")
-    monthly_sip_start = st.number_input("Initial Monthly SIP (₹)", value=85000, step=1000)
+    monthly_sip_start = st.number_input("Initial Monthly SIP (₹)", value=50000, step=1000)
     annual_increase = st.number_input("Annual SIP Increase (%)", value=15) / 100
     annual_return = st.number_input("Expected Annual Return (%)", value=15) / 100
     inflation_rate = st.number_input("Expected Inflation Rate (%)", value=6) / 100
     years = st.slider("Investment Duration (Years)", min_value=1, max_value=40, value=20)
-    current_portfolio_value = st.number_input("Current Portfolio Value (₹)", value=5465000, step=50000)
+    current_portfolio_value = st.number_input("Current Portfolio Value (₹)", value=2500000, step=50000)
 
 # --- Calculations --- #
 real_return = ((1 + annual_return) / (1 + inflation_rate)) - 1
