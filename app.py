@@ -11,12 +11,14 @@ with st.sidebar:
     monthly_sip_start = st.number_input("Initial Monthly SIP (₹)", value=85000, step=1000)
     annual_increase = st.number_input("Annual SIP Increase (%)", value=15) / 100
     annual_return = st.number_input("Expected Annual Return (%)", value=15) / 100
+    inflation_rate = st.number_input("Expected Inflation Rate (%)", value=6) / 100
     years = st.slider("Investment Duration (Years)", min_value=1, max_value=40, value=20)
     current_portfolio_value = st.number_input("Current Portfolio Value (₹)", value=5465000, step=50000)
 
 # --- Calculations --- #
+real_return = ((1 + annual_return) / (1 + inflation_rate)) - 1
+monthly_rate = real_return / 12
 months = years * 12
-monthly_rate = annual_return / 12
 
 sip_value = []
 lumpsum_value = []
@@ -63,7 +65,7 @@ final_lumpsum = lumpsum_value[-1]
 final_total = portfolio_value[-1]
 
 # --- Output in words --- #
-st.subheader("📢 Summary")
+st.subheader("📢 Summary (Inflation-Adjusted Values)")
 st.markdown(f"**Future Value of SIPs (with {int(annual_increase*100)}% step-up):**")
 st.success(f"👉 {format_inr(final_sip)}")
 
@@ -82,7 +84,7 @@ ax.plot(time_years, np.array(lumpsum_value) / 1e7, label="Current Portfolio Grow
 ax.plot(time_years, np.array(portfolio_value) / 1e7, label="Total Portfolio Value", color='purple', linestyle='--')
 ax.set_xlabel("Years")
 ax.set_ylabel("Value (₹ Crores)")
-ax.set_title("📊 Portfolio Growth Over Time")
+ax.set_title("📊 Portfolio Growth Over Time (Inflation Adjusted)")
 ax.legend()
 ax.grid(True)
 st.pyplot(fig)
