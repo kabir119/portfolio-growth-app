@@ -43,9 +43,20 @@ for month in range(months):
     lumpsum_value.append(current_value)
     portfolio_value.append(total)
 
-# --- Final Values --- #
-def format_inr(number):
-    return "₹ {:,.2f}".format(number)
+# --- INR Formatter --- #
+def format_inr(value):
+    x = int(value)
+    after_decimal = f"{value:.2f}".split(".")[1]
+    s = ""
+    if x >= 100000:
+        s = f"{x//100000},{x%100000:05d}"
+    else:
+        s = str(x)
+    if len(s) > 5:
+        s = s[:-5] + "," + s[-5:-3] + "," + s[-3:]
+    elif len(s) > 3:
+        s = s[:-3] + "," + s[-3:]
+    return f"₹ {s}.{after_decimal}"
 
 final_sip = sip_value[-1]
 final_lumpsum = lumpsum_value[-1]
